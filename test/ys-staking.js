@@ -111,7 +111,7 @@ describe("Ys, PairStaking", function () {
         await mockToken0Contract.approve(routerContract.address, 0)
         await mockToken1Contract.approve(routerContract.address, 0)
     });
-
+    
     
     it("Token+Token Staking, investPair", async function(){
         pair = await YsFactoryContract.getPair(mockToken0Contract.address, mockToken1Contract.address);
