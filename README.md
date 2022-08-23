@@ -17,6 +17,29 @@ npx hardhat export-abi
 
 <hr>
 
+## Slippage
+
+- Max Slippage
+
+```
+let slipagePercentage = 0.5;
+const slippageMax = 1 + slipagePercentage / 100;
+
+let max = amountsIn[0]*slippageMax;
+```
+
+- Min Slippage
+
+```
+let slipagePercentage = 0.5;
+const slippageMin = 1 - slipagePercentage / 100;
+
+let min = amountsOut[0]*slippageMin;
+```
+
+
+<hr>
+
 ## ERROR CODE
 
 Error String 정의
