@@ -6,18 +6,6 @@ npm install
 
   npx hardhat test (all)
 
-  npx hardhat test ./test/router-test.js
-
-  npx hardhat test ./test/compute-test.js
-
-  npx hardhat test ./test/factory-test.js
-
-  npx hardhat test ./test/swap-test.js
-
-  npx hardhat test ./test/staking-test.js
-
-  npx hardhat test ./test/mumbai-test.js
-
 
 - <b>컨트렉트 abi export</b>
 
