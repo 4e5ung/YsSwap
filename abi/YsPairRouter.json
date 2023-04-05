@@ -16,6 +16,168 @@
     "type": "constructor"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "collectA",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "collectB",
+        "type": "uint256"
+      }
+    ],
+    "name": "collectEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "harvestEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "investPairETHEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountA",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountB",
+        "type": "uint256"
+      }
+    ],
+    "name": "investPairEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "liquidity",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawPairETHEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "liquidity",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawPairEvent",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "WETH",
     "outputs": [
@@ -32,17 +194,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -78,144 +240,28 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amountOut",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveIn",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveOut",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "swapFee",
-        "type": "uint8"
-      }
-    ],
-    "name": "getAmountIn",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountIn",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountIn",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveIn",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveOut",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "swapFee",
-        "type": "uint8"
-      }
-    ],
-    "name": "getAmountOut",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountOut",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountOut",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address[]",
-        "name": "path",
-        "type": "address[]"
-      }
-    ],
-    "name": "getAmountsIn",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountIn",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address[]",
-        "name": "path",
-        "type": "address[]"
-      }
-    ],
-    "name": "getAmountsOut",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amountADesired",
+        "name": "_amountADesired",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountBDesired",
+        "name": "_amountBDesired",
         "type": "uint256"
       },
       {
         "internalType": "bool",
-        "name": "owned",
+        "name": "_owned",
         "type": "bool"
       }
     ],
@@ -234,17 +280,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -257,37 +303,37 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amountADesired",
+        "name": "_amountADesired",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountBDesired",
+        "name": "_amountBDesired",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountAMin",
+        "name": "_amountAMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountBMin",
+        "name": "_amountBMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -300,27 +346,27 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "token",
+        "name": "_token",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "amountTokenDesired",
+        "name": "_amountTokenDesired",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountTokenMin",
+        "name": "_amountTokenMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountETHMin",
+        "name": "_amountETHMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -332,47 +378,18 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amountA",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveA",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reserveB",
-        "type": "uint256"
-      }
-    ],
-    "name": "quote",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountB",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "to",
+        "name": "_to",
         "type": "address"
       }
     ],
@@ -411,32 +428,32 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "liquidity",
+        "name": "_liquidity",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountAMin",
+        "name": "_amountAMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountBMin",
+        "name": "_amountBMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -460,27 +477,27 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "token",
+        "name": "_token",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "liquidity",
+        "name": "_liquidity",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountTokenMin",
+        "name": "_amountTokenMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amountETHMin",
+        "name": "_amountETHMin",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "deadline",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],

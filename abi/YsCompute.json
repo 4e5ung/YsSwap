@@ -3,7 +3,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "factory_",
+        "name": "_factory",
         "type": "address"
       }
     ],
@@ -27,17 +27,51 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "tokenA",
+        "name": "_tokenA",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "tokenB",
+        "name": "_tokenB",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "liquidityAmount",
+        "name": "_amountIn",
+        "type": "uint256"
+      }
+    ],
+    "name": "getLiquidityPair",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountA",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountB",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_tokenA",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenB",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liquidityAmount",
         "type": "uint256"
       }
     ],

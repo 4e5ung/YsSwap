@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import './interfaces/IYsERC20.sol';
 
 contract YsERC20  {
-    string public constant name = 'Ys';
+    string public constant name = 'Yesung';
     string public constant symbol = 'MLP';
     uint8 public constant decimals = 18;
     uint  public totalSupply;

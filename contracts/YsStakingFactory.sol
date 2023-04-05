@@ -13,11 +13,19 @@ contract YsStakingFactory is Ownable {
     constructor() {
     }
 
+    /// @dev get pools length
     function allPoolsLength() external view returns (uint) {
         return allPools.length;
     }
 
 
+    /// @dev deploy single staking pool
+    /// @param _router stakingRouter contract
+    /// @param _stakedToken staking token address
+    /// @param _rewardToken reward token address
+    /// @param _rewardPerSecond reward sec amount
+    /// @param _startTimestamp create pool time
+    /// @param _bonusEndTimestamp end reward pool time
     function deployPool(
         address _router,
         address _stakedToken,
@@ -26,9 +34,9 @@ contract YsStakingFactory is Ownable {
         uint256 _startTimestamp,
         uint256 _bonusEndTimestamp
     ) external onlyOwner returns(YsStakingPool pool){
-        require(IERC20(_stakedToken).totalSupply() >= 0);
-        require(IERC20(_rewardToken).totalSupply() >= 0);
-        require(getPool[_stakedToken] == address(0), 'YsStakingFactory: POOL_EXISTS');
+        require(IERC20(_stakedToken).totalSupply() >= 0, 'YsStakingFactory: E01');
+        require(IERC20(_rewardToken).totalSupply() >= 0, 'YsStakingFactory: E02');
+        require(getPool[_stakedToken] == address(0), 'YsStakingFactory: E03');
 
         pool = new YsStakingPool();
 

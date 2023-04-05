@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import "./YsPair.sol";
+import "./interfaces/IYsPair.sol";
 
+/// @dev This is YsFactory contract
 contract YsFactory  {
-    address public feeTo;
-    address public feeToSetter;
+
+    address private factoryAdmin;
+    address private feeAdmin;
     
     uint8 private constant MIN_SWAP_FEE = 1;
     uint8 private constant MAX_SWAP_FEE = 100;
@@ -13,75 +15,86 @@ contract YsFactory  {
     uint8 private constant MAX_PROTOCOL_FEE = 10;
 
     mapping(address => mapping(address => address)) public getPair;
-    address[] public allPairs;
 
-    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
-
-    constructor(address _feeToSetter) {
-        feeToSetter = _feeToSetter;
+    constructor(address _factoryAdmin, address _feeAdmin) {
+        feeAdmin = _feeAdmin;
+        factoryAdmin = _factoryAdmin;
     }
 
-    function allPairsLength() external view returns (uint) {
-        return allPairs.length;
+    modifier onlyAdmin(){
+        require(msg.sender == factoryAdmin, "YsFactory: E01");
+        _;
     }
 
-    // function pairCodeHash() external pure returns (bytes32) {
-    //     return keccak256(type(YsPair).creationCode);
-    // }
-
-    function createPair(address router,
-        address tokenA, 
-        address tokenB, 
-        uint8 swapFee, 
-        uint8 protocolFee,
-        address rewardToken,
-        uint256 rewardPerSecond,
-        uint256 startTimestamp,
-        uint256 bonusEndTimestamp
-        // uint256 poolLimitPerUser
-    ) external returns (YsPair pair) {
-        require(tokenA != tokenB, 'YsFactory: E01');
-        (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), 'YsFactory: E02');
-        require(getPair[token0][token1] == address(0), 'YsFactory: E03'); // single check is sufficient
-
-        pair = new YsPair(router);
-
-        pair.initialize(token0, 
-            token1,
-            swapFee, 
-            protocolFee,
-            rewardToken,
-            rewardPerSecond,
-            startTimestamp,
-            bonusEndTimestamp
-        );
-
-        getPair[token0][token1] = address(pair);
-        getPair[token1][token0] = address(pair); // populate mapping in the reverse direction
-        allPairs.push(address(pair));
-        emit PairCreated(token0, token1, address(pair), allPairs.length);
+    modifier onlyFeeAdmin(){
+        require(msg.sender == feeAdmin, "YsFactory: E02");
+        _;
     }
 
-    function setFeeTo(address _feeTo) external {
-        require(msg.sender == feeToSetter, 'YsFactory: E04');
-        feeTo = _feeTo;
+    /// @dev set paircontract setting
+    /// @param _pairContract pair contract address
+    /// @param _tokenA  tokenA address
+    /// @param _tokenB  tokenB address
+    function setPair(
+        address _pairContract,
+        address _tokenA,
+        address _tokenB
+    ) external onlyAdmin {
+        require(_tokenA != _tokenB, 'YsFactory: E04');
+        (address token0, address token1) = _tokenA < _tokenB ? (_tokenA, _tokenB) : (_tokenB, _tokenA);
+        require(token0 != address(0), 'YsFactory: E05');
+
+        getPair[token0][token1] = _pairContract;
+        getPair[token1][token0] = _pairContract;
     }
 
-    function setFeeToSetter(address _feeToSetter) external {
-        require(msg.sender == feeToSetter, 'YsFactory: E04');
-        feeToSetter = _feeToSetter;
+    /// @dev set feeadmin address
+    /// @param _feeAdmin feeadmin eoa
+    function setFeeAdmin(address _feeAdmin) external onlyAdmin{
+        feeAdmin = _feeAdmin;
     }
 
-    // function setSwapFee(address tokenA, address tokenB, uint8 newFee ) external {
-    //     require(msg.sender == feeToSetter, 'YsFactory: FORBIDDEN');
-    //     require(newFee >= MIN_SWAP_FEE && newFee <= MAX_SWAP_FEE, "YsFactory: INVALID_SWAP_FEE");
-    //     IYsPair(getPair[tokenA][tokenB]).updateSwapFee(newFee);
-    // }
+    /// @dev set admin address
+    /// @param _factoryAdmin admin eoa
+    function setAdmin(address _factoryAdmin) external onlyAdmin{
+        factoryAdmin = _factoryAdmin;
+    }
 
-    // function setProtocolFee(address tokenA, address tokenB, uint8 newFee ) external {
-    //     require(msg.sender == feeToSetter, 'YsFactory: FORBIDDEN');
-    //     require(newFee >= MIN_PROTOCOL_FEE && newFee <= MAX_PROTOCOL_FEE, "YsFactory: INVALID_SWAP_FEE");
-    //     IYsPair(getPair[tokenA][tokenB]).updateProtocolFee(newFee);
-    // }
+    /// @dev set receive address(defalut zero)
+    /// @param _tokenA  tokenA address
+    /// @param _tokenB  tokenB address
+    /// @param _newFeeTo receive eoa
+    function setFeeTo(
+        address _tokenA,
+        address _tokenB, 
+        address _newFeeTo
+    ) external onlyFeeAdmin{
+        IYsPair(getPair[_tokenA][_tokenB]).updateFeeTo(_newFeeTo);
+    }
+
+    /// @dev set swap fee setting
+    /// @param _tokenA  tokenA address
+    /// @param _tokenB  tokenB address
+    /// @param _newFee  new swap fee (percent 30 = 0.3)
+    function setSwapFee(
+        address _tokenA, 
+        address _tokenB, 
+        uint8 _newFee 
+    ) external onlyFeeAdmin {
+        require(_newFee >= MIN_SWAP_FEE && _newFee <= MAX_SWAP_FEE, "YsFactory: E03");
+        IYsPair(getPair[_tokenA][_tokenB]).updateSwapFee(_newFee);
+    }
+
+    /// @dev set protocol fee setting
+    /// @param _tokenA  tokenA address
+    /// @param _tokenB  tokenB address
+    /// @param _newFee  new swap fee (percent 30 = 0.3)
+    function setProtocolFee(
+        address _tokenA, 
+        address _tokenB, 
+        uint8 _newFee 
+    ) external onlyFeeAdmin {
+        require(_newFee >= MIN_PROTOCOL_FEE && _newFee <= MAX_PROTOCOL_FEE, "YsFactory: E03");
+        IYsPair(getPair[_tokenA][_tokenB]).updateProtocolFee(_newFee);
+    }
 }

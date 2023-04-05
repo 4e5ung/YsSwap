@@ -3,8 +3,53 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_factory",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_router",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenA",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenB",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_swapFee",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_protocolFee",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_rewardToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rewardPerSecond",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTimestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_bonusEndTimestamp",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -55,12 +100,6 @@
         "internalType": "uint256",
         "name": "amount1",
         "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
       }
     ],
     "name": "Burn",
@@ -167,12 +206,6 @@
         "internalType": "uint256",
         "name": "amount1Out",
         "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
       }
     ],
     "name": "Swap",
@@ -380,8 +413,46 @@
       }
     ],
     "name": "deposit",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "pending",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeTo",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      }
+    ],
+    "name": "getReserve",
+    "outputs": [
+      {
+        "internalType": "uint112",
+        "name": "reserve",
+        "type": "uint112"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -405,54 +476,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_token0",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_token1",
-        "type": "address"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_swapFee",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_protocolFee",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "_rewardToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_rewardPerSecond",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_startTimestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_bonusEndTimestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -573,7 +596,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "to",
+        "name": "_to",
         "type": "address"
       }
     ],
@@ -586,17 +609,17 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "amount0Out",
+        "name": "_amount0Out",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amount1Out",
+        "name": "_amount1Out",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "to",
+        "name": "_to",
         "type": "address"
       }
     ],
@@ -708,7 +731,46 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_newFeeTo",
+        "type": "address"
+      }
+    ],
+    "name": "updateFeeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "_newFee",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateProtocolFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "_newFee",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateSwapFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
         "type": "address"
       }
     ],
@@ -757,7 +819,7 @@
       },
       {
         "internalType": "address",
-        "name": "owner",
+        "name": "_owner",
         "type": "address"
       }
     ],

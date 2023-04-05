@@ -40,11 +40,13 @@ interface IYsPair {
     // function token1() external view returns (address);
     function rewardToken() external view returns (address);
     function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+    function getReserve(address _token) external view returns(uint112 reserve);
     // function price0CumulativeLast() external view returns (uint);
     // function price1CumulativeLast() external view returns (uint);
     function kLast() external view returns (uint);
     function swapFee() external view returns (uint8);
     function protocolFee() external view returns (uint8);
+    function feeTo() external view returns(address);
 
     function swap(uint amount0Out, uint amount1Out, address to) external;
     function skim(address to) external;
@@ -52,10 +54,11 @@ interface IYsPair {
 
     function initialize(address, address, uint8, uint8, address, uint256, uint256, uint256, uint256) external;
 
+    function updateFeeTo(address) external;
     function updateSwapFee(uint8) external;
     function updateProtocolFee(uint8) external;
 
-    function deposit(address from) external;
+    function deposit(address from) external returns(uint256 pending);
     function withdraw(uint256 liquidity, address burnFrom, address from) external returns (uint amount0, uint amount1, uint pending);
     function userState(address to) external view returns (uint256 amount, uint256 rewardDebt, uint256 cumulativeRewardDebt, uint256 feeCollect0, uint256 feeCollect1);
     function collect(address _from) external returns(uint256 feeCollect0, uint256 feeCollect1);

@@ -9,9 +9,9 @@ const overrides = {
 
 async function main() {
 
-    //TOKEN_A
+    //CVTX
     const mockToken0Contract = (await ethers.getContractFactory("TokenERC20")).attach('0x3F2c28b656e2B40FB8Ff9517dB0286A412b62EE3');
-    //TOKEN_B
+    //MTIX
     const mockToken1Contract = (await ethers.getContractFactory("TokenERC20")).attach('0xB36251BE91f78b24533e746992509000E20bde46');
     //WMAITX
     const WMATICContract = (await ethers.getContractFactory("YsMatic")).attach('0xe11577d241e05D7e6419b4996c1B47eD47f6E37b');
